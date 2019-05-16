@@ -24,6 +24,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
+import com.watabou.input.NoosaInputProcessor;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.RenderedText;
@@ -36,13 +37,13 @@ public class RedButton extends Button<GameAction> {
 	protected RenderedText text;
 	protected Image icon;
 			
-	public RedButton( String label ) {
-		this(label, 9);
+	public RedButton( String label, GameAction action ) {
+		this(label, 9, action);
 	}
 
-	public RedButton( String label, int size ){
+	public RedButton( String label, int size, GameAction action ){
 		super();
-
+		hotKey = action;
 		text = PixelScene.renderText( size );
 		text.text( label );
 		add( text );

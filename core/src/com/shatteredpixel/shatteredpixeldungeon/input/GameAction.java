@@ -47,6 +47,33 @@ public enum GameAction {
 	MOVE_TOP_LEFT("Move NW"), MOVE_TOP_RIGHT("Move NE"), MOVE_BOTTOM_LEFT("Move SW"), MOVE_BOTTOM_RIGHT("Move SE"),
 	OPERATE("Current Cell"),
 
+	PLAY("Play"),
+	RANKINGS("Rankings"),
+	MAIN_MENU("Main menu"),
+
+	OPTIONS("Options"),
+	SLOT("Slot"),
+	ITEM("Item"),
+
+	BUY("Buy"),
+	SELL("Sell"),
+	SELL_1("Sell 1"),
+	SELL_ALL("Sell all"),
+	STEAL("Steal"),
+	REFORGE("Reforge"),
+	REWARD("Reward"),
+
+	CHALLENGES("Challenges"),
+	ERASE("Erase"),
+
+	WARRIOR("Warrior"),
+	MAGE("Mage"),
+	ROGUE("Rogue"),
+	HUNTRESS("Huntress"),
+
+	YES("Yes"), // continue, start
+	NO("No"),// cancel, return, stay
+
 	UNKNOWN(null);
 
 	private final String description;

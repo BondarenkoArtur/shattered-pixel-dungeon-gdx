@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.items.stones;
 
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
@@ -93,7 +94,8 @@ public class StoneOfAugmentation extends InventoryStone {
 			if (toAugment instanceof Weapon){
 				for (final Weapon.Augment aug : Weapon.Augment.values()){
 					if (((Weapon) toAugment).augment != aug){
-						RedButton btnSpeed = new RedButton( Messages.get(this, aug.name()) ) {
+						//todo fix all red buttons
+						RedButton btnSpeed = new RedButton( Messages.get(this, aug.name()), null) {
 							@Override
 							protected void onClick() {
 								hide();
@@ -110,7 +112,7 @@ public class StoneOfAugmentation extends InventoryStone {
 			} else if (toAugment instanceof Armor){
 				for (final Armor.Augment aug : Armor.Augment.values()){
 					if (((Armor) toAugment).augment != aug){
-						RedButton btnSpeed = new RedButton( Messages.get(this, aug.name()) ) {
+						RedButton btnSpeed = new RedButton( Messages.get(this, aug.name()), null) {
 							@Override
 							protected void onClick() {
 								hide();
@@ -125,7 +127,7 @@ public class StoneOfAugmentation extends InventoryStone {
 				}
 			}
 			
-			RedButton btnCancel = new RedButton( Messages.get(this, "cancel") ) {
+			RedButton btnCancel = new RedButton( Messages.get(this, "cancel"), GameAction.NO) {
 				@Override
 				protected void onClick() {
 					hide();

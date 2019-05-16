@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
@@ -49,6 +50,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoItem;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndJournal;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.Blending;
+import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
@@ -158,14 +160,18 @@ public class AlchemyScene extends PixelScene {
 				pos += BTN_SIZE + 2;
 			}
 		}
-		
-		btnCombine = new RedButton(""){
+
+		btnCombine = new RedButton("", GameAction.YES){
+			BitmapText combineText;
 			Image arrow;
 			
 			@Override
 			protected void createChildren() {
 				super.createChildren();
-				
+				combineText = new BitmapText( PixelScene.pixelFont);
+				combineText.text("Continue");
+				add(combineText);
+
 				arrow = Icons.get(Icons.RESUME);
 				add(arrow);
 			}
@@ -173,6 +179,11 @@ public class AlchemyScene extends PixelScene {
 			@Override
 			protected void layout() {
 				super.layout();
+				combineText.scale.set(PixelScene.align(0.5f));
+				combineText.measure();
+				combineText.x = x + (width - combineText.width())/2f;
+				combineText.y = y + (height - combineText.height());
+				PixelScene.align(combineText);
 				arrow.x = x + (width - arrow.width)/2f;
 				arrow.y = y + (height - arrow.height)/2f;
 				PixelScene.align(arrow);
@@ -184,10 +195,12 @@ public class AlchemyScene extends PixelScene {
 				if (value){
 					arrow.tint(1, 1, 0, 1);
 					arrow.alpha(1f);
+					combineText.alpha(1f);
 					bg.alpha(1f);
 				} else {
 					arrow.color(0, 0, 0);
 					arrow.alpha(0.6f);
+					combineText.alpha(0.6f);
 					bg.alpha(0.6f);
 				}
 			}

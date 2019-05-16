@@ -140,7 +140,7 @@ public class WndSettings extends WndTabbed {
 				add(scale);
 			}
 
-			RedButton btnResolution = new RedButton(Gdx.graphics.isFullscreen() ? TXT_SWITCH_WIN : TXT_SWITCH_FULL ) {
+			RedButton btnResolution = new RedButton(Gdx.graphics.isFullscreen() ? TXT_SWITCH_WIN : TXT_SWITCH_FULL, null) {
 				@Override
 				protected void onClick() {
 					SPDSettings.fullscreen(!SPDSettings.fullscreen());
@@ -184,7 +184,7 @@ public class WndSettings extends WndTabbed {
 			PixelScene.align(barDesc);
 			add(barDesc);
 
-			RedButton btnSplit = new RedButton(Messages.get(this, "split")){
+			RedButton btnSplit = new RedButton(Messages.get(this, "split"), null){
 				@Override
 				protected void onClick() {
 					SPDSettings.toolbarMode(Toolbar.Mode.SPLIT.name());
@@ -194,7 +194,7 @@ public class WndSettings extends WndTabbed {
 			btnSplit.setRect( 0, barDesc.y + barDesc.baseLine()+GAP_TINY, 36, 16);
 			add(btnSplit);
 
-			RedButton btnGrouped = new RedButton(Messages.get(this, "group")){
+			RedButton btnGrouped = new RedButton(Messages.get(this, "group"), null){
 				@Override
 				protected void onClick() {
 					SPDSettings.toolbarMode(Toolbar.Mode.GROUP.name());
@@ -204,7 +204,7 @@ public class WndSettings extends WndTabbed {
 			btnGrouped.setRect( btnSplit.right()+GAP_TINY, barDesc.y + barDesc.baseLine()+GAP_TINY, 36, 16);
 			add(btnGrouped);
 
-			RedButton btnCentered = new RedButton(Messages.get(this, "center")){
+			RedButton btnCentered = new RedButton(Messages.get(this, "center"), null){
 				@Override
 				protected void onClick() {
 					SPDSettings.toolbarMode(Toolbar.Mode.CENTER.name());
@@ -250,7 +250,7 @@ public class WndSettings extends WndTabbed {
 				slots.setRect(0, chkFlipTags.bottom() + GAP_LRG, WIDTH, SLIDER_HEIGHT);
 				add(slots);
 			} else*/ if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-				RedButton btnKeymap = new RedButton(TXT_BINDINGS) {
+				RedButton btnKeymap = new RedButton(TXT_BINDINGS, null) {
 					@Override
 					protected void onClick() {
 						Game.scene().add(new WndKeymap());

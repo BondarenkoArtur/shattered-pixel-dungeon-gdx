@@ -406,7 +406,7 @@ public class CursedWand {
 									
 									@Override
 									protected void onSelect(int index) {
-										Game.instance.finish();
+//										Game.instance.finish();
 									}
 									
 									@Override

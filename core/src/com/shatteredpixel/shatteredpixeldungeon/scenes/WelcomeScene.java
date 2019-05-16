@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.effects.BannerSprites;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Fireball;
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -95,7 +96,7 @@ public class WelcomeScene extends PixelScene {
 		signs.y = title.y;
 		add( signs );
 
-		DarkRedButton okay = new DarkRedButton(Messages.get(this, "continue")){
+		DarkRedButton okay = new DarkRedButton(Messages.get(this, "continue"), GameAction.YES){
 			@Override
 			protected void onClick() {
 				super.onClick();
@@ -110,7 +111,7 @@ public class WelcomeScene extends PixelScene {
 		};
 
 		if (previousVersion != 0){
-			DarkRedButton changes = new DarkRedButton(Messages.get(this, "changelist")){
+			DarkRedButton changes = new DarkRedButton(Messages.get(this, "changelist"), null){
 				@Override
 				protected void onClick() {
 					super.onClick();
@@ -232,8 +233,9 @@ public class WelcomeScene extends PixelScene {
 			bg.brightness(0.4f);
 		}
 
-		DarkRedButton(String text){
-			super(text);
+		DarkRedButton(String text, GameAction action){
+			// todo check this
+			super(text, action);
 		}
 
 		@Override

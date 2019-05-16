@@ -602,7 +602,7 @@ public class GameScene extends PixelScene {
 	@Override
 	protected void onBackPressed() {
 		if (!cancel()) {
-			add( new WndGame() );
+			GameScene.show( new WndGame() );
 		}
 	}
 	

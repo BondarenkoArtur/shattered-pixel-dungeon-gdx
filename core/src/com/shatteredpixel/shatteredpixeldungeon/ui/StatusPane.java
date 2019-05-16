@@ -74,7 +74,8 @@ public class StatusPane extends Component {
 
 	private Toolbar.PickedUpItem pickedUp;
 	
-	private BitmapText version;
+	private BitmapText version1;
+	private BitmapText version2;
 
 	@Override
 	protected void createChildren() {
@@ -154,10 +155,13 @@ public class StatusPane extends Component {
 		add( buffs );
 
 		add( pickedUp = new Toolbar.PickedUpItem());
-		
-		version = new BitmapText( "v" + Game.version, PixelScene.pixelFont);
-		version.alpha( 0.5f );
-		add(version);
+
+		version1 = new BitmapText( "uaBArt update for Twitch", PixelScene.pixelFont);
+		version1.alpha( 0.5f );
+		add(version1);
+		version2 = new BitmapText( "SPD v " + Game.version, PixelScene.pixelFont);
+		version2.alpha( 0.5f );
+		add(version2);
 	}
 
 	@Override
@@ -192,11 +196,17 @@ public class StatusPane extends Component {
 
 		btnMenu.setPos( width - btnMenu.width(), 1 );
 		
-		version.scale.set(PixelScene.align(0.5f));
-		version.measure();
-		version.x = width - version.width();
-		version.y = btnMenu.bottom() + (4 - version.baseLine());
-		PixelScene.align(version);
+		version1.scale.set(PixelScene.align(0.5f));
+		version1.measure();
+		version1.x = width - version1.width();
+		version1.y = btnMenu.bottom() + (4 - version1.baseLine());
+		PixelScene.align(version1);
+
+		version2.scale.set(PixelScene.align(0.5f));
+		version2.measure();
+		version2.x = width - version2.width();
+		version2.y = btnMenu.bottom() + (8 - version2.baseLine());
+		PixelScene.align(version2);
 	}
 	
 	private static final int[] warningColors = new int[]{0x660000, 0xCC0000, 0x660000};
@@ -372,6 +382,7 @@ public class StatusPane extends Component {
 
 			width = image.width + 4;
 			height = image.height + 4;
+			hotKey = GameAction.OPTIONS;
 		}
 
 		@Override

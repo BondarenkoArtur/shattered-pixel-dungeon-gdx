@@ -99,7 +99,7 @@ public class TitleScene extends PixelScene {
 		signs.y = title.y;
 		add( signs );
 
-		DashboardItem btnBadges = new DashboardItem( Messages.get(this, "badges"), 3 ) {
+		DashboardItem btnBadges = new DashboardItem( Messages.get(this, "badges"), 3, null ) {
 			@Override
 			protected void onClick() {
 				ShatteredPixelDungeon.switchNoFade( BadgesScene.class );
@@ -107,7 +107,7 @@ public class TitleScene extends PixelScene {
 		};
 		add(btnBadges);
 
-		DashboardItem btnAbout = new DashboardItem( Messages.get(this, "about"), 1 ) {
+		DashboardItem btnAbout = new DashboardItem( Messages.get(this, "about"), 1, null ) {
 			@Override
 			protected void onClick() {
 				ShatteredPixelDungeon.switchNoFade( AboutScene.class );
@@ -115,7 +115,7 @@ public class TitleScene extends PixelScene {
 		};
 		add( btnAbout );
 
-		DashboardItem btnPlay = new DashboardItem( Messages.get(this, "play"), 0 ) {
+		DashboardItem btnPlay = new DashboardItem( Messages.get(this, "play"), 0, GameAction.PLAY ) {
 			@Override
 			protected void onClick() {
 				if (GamesInProgress.checkAll().size() == 0){
@@ -137,7 +137,7 @@ public class TitleScene extends PixelScene {
 		};
 		add( btnPlay );
 
-		DashboardItem btnRankings = new DashboardItem( Messages.get(this, "rankings"), 2 ) {
+		DashboardItem btnRankings = new DashboardItem( Messages.get(this, "rankings"), 2, GameAction.RANKINGS) {
 			@Override
 			protected void onClick() {
 				ShatteredPixelDungeon.switchNoFade( RankingsScene.class );
@@ -157,7 +157,7 @@ public class TitleScene extends PixelScene {
 			btnAbout.setPos( w / 2, btnBadges.top() );
 		}
 
-		BitmapText version = new BitmapText( "v " + Game.version + "", pixelFont);
+		BitmapText version = new BitmapText( "uaBArt update for Twitch. SPD v " + Game.version + "", pixelFont);
 		version.measure();
 		version.hardlight( 0x888888 );
 		version.x = w - version.width();
@@ -206,11 +206,12 @@ public class TitleScene extends PixelScene {
 		private Image image;
 		private RenderedText label;
 
-		public DashboardItem( String text, int index ) {
+		public DashboardItem( String text, int index, GameAction hotkey ) {
 			super();
 
 			image.frame( image.texture.uvRect( index * IMAGE_SIZE, 0, (index + 1) * IMAGE_SIZE, IMAGE_SIZE ) );
 			this.label.text( text );
+			this.hotKey = hotkey;
 
 			setSize( SIZE, SIZE );
 		}

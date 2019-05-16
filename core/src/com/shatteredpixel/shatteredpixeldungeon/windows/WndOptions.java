@@ -21,10 +21,12 @@
 package com.shatteredpixel.shatteredpixeldungeon.windows;
 
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextMultiline;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.watabou.input.NoosaInputProcessor;
 
 public class WndOptions extends Window {
 
@@ -54,7 +56,7 @@ public class WndOptions extends Window {
 		
 		for (int i=0; i < options.length; i++) {
 			final int index = i;
-			RedButton btn = new RedButton( options[i] ) {
+			OptionButton btn = new OptionButton( "S" + (i + 1) + ": " + options[i], GameAction.SLOT, i+1) {
 				@Override
 				protected void onClick() {
 					hide();
@@ -71,4 +73,29 @@ public class WndOptions extends Window {
 	}
 	
 	protected void onSelect( int index ) {};
+
+	private class OptionButton extends RedButton {
+
+		private final int slot;
+
+		private OptionButton(String label, GameAction action, int slot) {
+			super(label, action);
+			this.slot = slot;
+		}
+
+
+		@Override
+		protected boolean onKeyUp(NoosaInputProcessor.Key<GameAction> key) {
+			if (active && key.action.equals(GameAction.SLOT)) {
+				if (slot == (key.code >> 8)) {
+					onClick();
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return super.onKeyUp(key);
+			}
+		}
+	}
 }

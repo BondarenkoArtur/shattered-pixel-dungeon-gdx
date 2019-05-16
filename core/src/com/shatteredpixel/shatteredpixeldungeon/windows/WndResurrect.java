@@ -22,6 +22,7 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 
 import com.shatteredpixel.shatteredpixeldungeon.Statistics;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.items.Ankh;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
@@ -59,7 +60,7 @@ public class WndResurrect extends Window {
 		message.setPos(0, titlebar.bottom() + GAP);
 		add( message );
 		
-		RedButton btnYes = new RedButton( Messages.get(this, "yes") ) {
+		RedButton btnYes = new RedButton( Messages.get(this, "yes") , GameAction.YES) {
 			@Override
 			protected void onClick() {
 				hide();
@@ -73,7 +74,7 @@ public class WndResurrect extends Window {
 		btnYes.setRect( 0, message.top() + message.height() + GAP, WIDTH, BTN_HEIGHT );
 		add( btnYes );
 		
-		RedButton btnNo = new RedButton( Messages.get(this, "no") ) {
+		RedButton btnNo = new RedButton( Messages.get(this, "no") , GameAction.NO) {
 			@Override
 			protected void onClick() {
 				hide();

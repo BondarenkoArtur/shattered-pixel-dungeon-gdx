@@ -322,7 +322,8 @@ public class WndJournal extends WndTabbed {
 			pageButtons = new RedButton[NUM_BUTTONS];
 			for (int i = 0; i < NUM_BUTTONS; i++){
 				final int idx = i;
-				pageButtons[i] = new RedButton( "" ){
+				// todo check this
+				pageButtons[i] = new RedButton( "", null){
 					@Override
 					protected void onClick() {
 						currentPageIdx = idx;
@@ -563,7 +564,8 @@ public class WndJournal extends WndTabbed {
 			itemButtons = new RedButton[NUM_BUTTONS];
 			for (int i = 0; i < NUM_BUTTONS; i++){
 				final int idx = i;
-				itemButtons[i] = new RedButton( "" ){
+				// todo check this
+				itemButtons[i] = new RedButton( "", null){
 					@Override
 					protected void onClick() {
 						currentItemIdx = idx;

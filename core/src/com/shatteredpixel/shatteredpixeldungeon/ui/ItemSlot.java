@@ -37,6 +37,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.watabou.input.NoosaInputProcessor;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.ui.Button;
@@ -50,11 +51,16 @@ public class ItemSlot extends Button<GameAction> {
 	
 	private static final float ENABLED	= 1.0f;
 	private static final float DISABLED	= 0.3f;
-	
+
+	private static final int MAX_NUMBER = 36*36;
+	private static boolean[] itemCodes = new boolean[MAX_NUMBER];
+
+	protected int itemCode;
 	protected ItemSprite icon;
 	protected Item       item;
 	protected BitmapText topLeft;
 	protected BitmapText topRight;
+	protected BitmapText bottomLeft;
 	protected BitmapText bottomRight;
 	protected Image      bottomRightIcon;
 	protected boolean    iconVisible = true;
@@ -88,6 +94,7 @@ public class ItemSlot extends Button<GameAction> {
 	
 	public ItemSlot() {
 		super();
+		itemCode = generateCode();
 		icon.visible(false);
 		enable(false);
 	}
@@ -96,7 +103,13 @@ public class ItemSlot extends Button<GameAction> {
 		this();
 		item( item );
 	}
-		
+
+	@Override
+	public synchronized void destroy() {
+		super.destroy();
+		itemCodes[itemCode] = false;
+	}
+
 	@Override
 	protected void createChildren() {
 		
@@ -111,6 +124,9 @@ public class ItemSlot extends Button<GameAction> {
 		topRight = new BitmapText( PixelScene.pixelFont);
 		add( topRight );
 		
+		bottomLeft = new BitmapText( PixelScene.pixelFont);
+		add( bottomLeft );
+
 		bottomRight = new BitmapText( PixelScene.pixelFont);
 		add( bottomRight );
 	}
@@ -141,6 +157,14 @@ public class ItemSlot extends Button<GameAction> {
 			PixelScene.align(topRight);
 		}
 		
+		if (bottomLeft != null) {
+			bottomLeft.scale.set(PixelScene.align(0.5f));
+			bottomLeft.measure();
+			bottomLeft.x = x;
+			bottomLeft.y = y + (height - bottomLeft.height());
+			PixelScene.align(bottomLeft);
+		}
+
 		if (bottomRight != null) {
 			bottomRight.x = x + (width - bottomRight.width());
 			bottomRight.y = y + (height - bottomRight.height());
@@ -272,9 +296,29 @@ public class ItemSlot extends Button<GameAction> {
 			bottomRight.text( null );
 		}
 
+		updateItemCodeText();
+
 		layout();
 	}
-	
+
+	private void updateItemCodeText() {
+		if (itemCode != -1) {
+			int firstLetter = itemCode / 36;
+			int secondLetter = itemCode % 36;
+			if (firstLetter < 10) {
+				firstLetter += 48;
+			} else {
+				firstLetter += 87;
+			}
+			if (secondLetter < 10) {
+				secondLetter += 48;
+			} else {
+				secondLetter += 87;
+			}
+			bottomLeft.text("i" + (char) firstLetter + (char) secondLetter);
+		}
+	}
+
 	public void enable( boolean value ) {
 		
 		active = value;
@@ -283,6 +327,7 @@ public class ItemSlot extends Button<GameAction> {
 		icon.alpha( alpha );
 		topLeft.alpha( alpha );
 		topRight.alpha( alpha );
+		bottomLeft.alpha( alpha );
 		bottomRight.alpha( alpha );
 		if (bottomRightIcon != null) bottomRightIcon.alpha( alpha );
 	}
@@ -298,4 +343,41 @@ public class ItemSlot extends Button<GameAction> {
 		else remove( bottomRight );
 		iconVisible = BR;
 	}
+
+	private int generateCode() {
+		int code = -1;
+		for (int i = 0; i < 10; i++) {
+			int tmpCode = new java.util.Random().nextInt(MAX_NUMBER - 1);
+			if (!itemCodes[tmpCode]) {
+				code = tmpCode;
+				itemCodes[code] = true;
+				break;
+			}
+		}
+		if (code == -1) {
+			for (int i = 0; i < MAX_NUMBER; i++) {
+				if (!itemCodes[i]) {
+					code = i;
+					itemCodes[code] = true;
+					break;
+				}
+			}
+		}
+		return code;
+	}
+
+	@Override
+	protected boolean onKeyUp(NoosaInputProcessor.Key<GameAction> key) {
+		if (active && key.action.equals(GameAction.ITEM)) {
+			if (itemCode == (key.code >> 8)) {
+				onClick();
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return super.onKeyUp(key);
+		}
+	}
+
 }

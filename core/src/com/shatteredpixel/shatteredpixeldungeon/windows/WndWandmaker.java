@@ -64,8 +64,8 @@ public class WndWandmaker extends Window {
 		message.maxWidth(WIDTH);
 		message.setPos(0, titlebar.bottom() + GAP);
 		add( message );
-		
-		RedButton btnWand1 = new RedButton( Wandmaker.Quest.wand1.name() ) {
+		// TODO: 5/14/19 fix wand with slot buttons
+		RedButton btnWand1 = new RedButton( Wandmaker.Quest.wand1.name(), null) {
 			@Override
 			protected void onClick() {
 				selectReward( wandmaker, item, Wandmaker.Quest.wand1 );
@@ -74,7 +74,7 @@ public class WndWandmaker extends Window {
 		btnWand1.setRect(0, message.top() + message.height() + GAP, WIDTH, BTN_HEIGHT);
 		add( btnWand1 );
 		
-		RedButton btnWand2 = new RedButton( Wandmaker.Quest.wand2.name() ) {
+		RedButton btnWand2 = new RedButton( Wandmaker.Quest.wand2.name(), null) {
 			@Override
 			protected void onClick() {
 				selectReward( wandmaker, item, Wandmaker.Quest.wand2 );

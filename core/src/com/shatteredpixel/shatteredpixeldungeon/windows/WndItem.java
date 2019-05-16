@@ -22,6 +22,7 @@ package com.shatteredpixel.shatteredpixeldungeon.windows;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -29,6 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.ItemSlot;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextMultiline;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.watabou.input.NoosaInputProcessor;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,9 +92,12 @@ public class WndItem extends Window {
 		
 		if (Dungeon.hero.isAlive() && options) {
 			ArrayList<RedButton> line = new ArrayList<>();
-			for (final String action:item.actions( Dungeon.hero )) {
-				
-				RedButton btn = new RedButton( Messages.get(item, "ac_" + action), 8 ) {
+			ArrayList<String> actions = item.actions(Dungeon.hero);
+			for (int i = 0; i < actions.size(); i++) {
+				final String action = actions.get(i);
+				ItemRedButton btn =
+						new ItemRedButton("S" + (i + 1) + ": " +
+								Messages.get(item, "ac_" + action), 8, GameAction.SLOT, i + 1) {
 					@Override
 					protected void onClick() {
 						hide();
@@ -189,4 +194,30 @@ public class WndItem extends Window {
 			}
 		}
 	};
+
+	private class ItemRedButton extends RedButton {
+
+		private final int id;
+
+		public ItemRedButton(String label, int size, GameAction action, int id) {
+			super(label, size, action);
+			this.id = id;
+		}
+
+
+			@Override
+			protected boolean onKeyUp(NoosaInputProcessor.Key<GameAction> key) {
+			if (active && key.action.equals(GameAction.SLOT)) {
+				if (id == (key.code >> 8)) {
+					onClick();
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return super.onKeyUp(key);
+			}
+		}
+
+	}
 }

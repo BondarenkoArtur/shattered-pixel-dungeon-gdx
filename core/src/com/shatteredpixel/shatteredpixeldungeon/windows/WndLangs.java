@@ -63,7 +63,7 @@ public class WndLangs extends Window {
 		int y = 0;
 		for (int i = 0; i < langs.size(); i++){
 			final int langIndex = i;
-			RedButton btn = new RedButton(Messages.titleCase(langs.get(i).nativeName())){
+			RedButton btn = new RedButton(Messages.titleCase(langs.get(i).nativeName()), null){
 				@Override
 				protected void onClick() {
 					super.onClick();
@@ -146,7 +146,7 @@ public class WndLangs extends Window {
 			info.setPos(textLeft, title.height() + 2);
 			add(info);
 
-			RedButton creditsBtn = new RedButton(Messages.titleCase(Messages.get(this, "credits"))){
+			RedButton creditsBtn = new RedButton(Messages.titleCase(Messages.get(this, "credits")), null){
 				@Override
 				protected void onClick() {
 					super.onClick();

@@ -60,7 +60,7 @@ public class WndKeymap extends Window {
 
 		resize( ww, wh );
 
-		RedButton btnReset = new RedButton( "Reset To Defaults" ) {
+		RedButton btnReset = new RedButton( "Reset To Defaults", null) {
 			@Override
 			protected void onClick() {
 				resetToDefaults();

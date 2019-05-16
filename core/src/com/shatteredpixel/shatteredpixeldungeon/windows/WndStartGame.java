@@ -29,6 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
@@ -41,12 +42,15 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.IconButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.RenderedText;
 import com.watabou.noosa.ui.Button;
 import com.watabou.noosa.ui.Component;
+
+import static com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene.pixelFont;
 
 public class WndStartGame extends Window {
 	
@@ -83,8 +87,8 @@ public class WndStartGame extends Window {
 		HeroPane ava = new HeroPane();
 		ava.setRect(20, separator.y + 2, WIDTH-30, 80);
 		add(ava);
-		
-		RedButton start = new RedButton(Messages.get(this, "start")){
+
+		RedButton start = new RedButton(Messages.get(this, "start"), GameAction.YES){
 			@Override
 			protected void onClick() {
 				if (GamesInProgress.selectedClass == null) return;
@@ -156,7 +160,8 @@ public class WndStartGame extends Window {
 		private HeroClass cl;
 		
 		private Image hero;
-		
+		private BitmapText name;
+
 		private static final int WIDTH = 24;
 		private static final int HEIGHT = 16;
 		
@@ -167,15 +172,20 @@ public class WndStartGame extends Window {
 			
 			if (cl == HeroClass.WARRIOR){
 				hero = new Image(Assets.WARRIOR, 0, 90, 12, 15);
+				hotKey = GameAction.WARRIOR;
 			} else if (cl == HeroClass.MAGE){
 				hero = new Image(Assets.MAGE, 0, 90, 12, 15);
+				hotKey = GameAction.MAGE;
 			} else if (cl == HeroClass.ROGUE){
 				hero = new Image(Assets.ROGUE, 0, 90, 12, 15);
+				hotKey = GameAction.ROGUE;
 			} else if (cl == HeroClass.HUNTRESS){
 				hero = new Image(Assets.HUNTRESS, 0, 90, 12, 15);
+				hotKey = GameAction.HUNTRESS;
 			}
 			add(hero);
-			
+			name = new BitmapText(Messages.capitalize(cl.title()), pixelFont);
+			add(name);
 		}
 		
 		@Override
@@ -185,6 +195,11 @@ public class WndStartGame extends Window {
 				hero.x = x + (width - hero.width()) / 2f;
 				hero.y = y + (height - hero.height()) / 2f;
 				PixelScene.align(hero);
+				name.scale.set(PixelScene.align(0.5f));
+				name.measure();
+                name.x = (hero.x + hero.width() / 2f) - name.width() / 2f;
+                name.y = hero.y + hero.height() - 1;
+				PixelScene.align(name);
 			}
 		}
 		

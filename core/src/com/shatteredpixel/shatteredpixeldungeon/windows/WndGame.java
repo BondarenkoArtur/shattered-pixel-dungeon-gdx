@@ -24,6 +24,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
@@ -47,7 +48,7 @@ public class WndGame extends Window {
 		
 		super();
 		
-		addButton( new RedButton( Messages.get(this, "settings") ) {
+		addButton( new RedButton( Messages.get(this, "settings"), null) {
 			@Override
 			protected void onClick() {
 				hide();
@@ -57,7 +58,7 @@ public class WndGame extends Window {
 
 		// Challenges window
 		if (Dungeon.challenges > 0) {
-			addButton( new RedButton( Messages.get(this, "challenges") ) {
+			addButton( new RedButton( Messages.get(this, "challenges"), GameAction.CHALLENGES) {
 				@Override
 				protected void onClick() {
 					hide();
@@ -70,7 +71,7 @@ public class WndGame extends Window {
 		if (!Dungeon.hero.isAlive()) {
 			
 			RedButton btnStart;
-			addButton( btnStart = new RedButton( Messages.get(this, "start") ) {
+			addButton( btnStart = new RedButton( Messages.get(this, "start"), GameAction.YES) {
 				@Override
 				protected void onClick() {
 					GamesInProgress.selectedClass = Dungeon.hero.heroClass;
@@ -80,7 +81,7 @@ public class WndGame extends Window {
 			} );
 			btnStart.textColor(Window.TITLE_COLOR);
 			
-			addButton( new RedButton( Messages.get(this, "rankings") ) {
+			addButton( new RedButton( Messages.get(this, "rankings"), GameAction.RANKINGS) {
 				@Override
 				protected void onClick() {
 					InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
@@ -91,7 +92,7 @@ public class WndGame extends Window {
 
 		addButtons(
 				// Main menu
-				new RedButton( Messages.get(this, "menu") ) {
+				new RedButton( Messages.get(this, "menu"), GameAction.MAIN_MENU) {
 					@Override
 					protected void onClick() {
 						try {
@@ -103,16 +104,16 @@ public class WndGame extends Window {
 					}
 				},
 				// Quit
-				new RedButton( Messages.get(this, "exit") ) {
+				new RedButton( Messages.get(this, "exit"), null) {
 					@Override
 					protected void onClick() {
-						Game.instance.finish();
+//						Game.instance.finish();
 					}
 				}
 		);
 
 		// Cancel
-		addButton( new RedButton( Messages.get(this, "return") ) {
+		addButton( new RedButton( Messages.get(this, "return"), GameAction.NO) {
 			@Override
 			protected void onClick() {
 				hide();

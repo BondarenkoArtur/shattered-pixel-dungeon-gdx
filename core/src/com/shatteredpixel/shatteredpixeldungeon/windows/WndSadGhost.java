@@ -71,8 +71,8 @@ public class WndSadGhost extends Window {
 		message.maxWidth(WIDTH);
 		message.setPos(0, titlebar.bottom() + GAP);
 		add( message );
-		
-		RedButton btnWeapon = new RedButton( Messages.get(this, "weapon") ) {
+		// todo fix this
+		RedButton btnWeapon = new RedButton( Messages.get(this, "weapon"), null) {
 			@Override
 			protected void onClick() {
 				selectReward( ghost, Ghost.Quest.weapon );
@@ -82,7 +82,7 @@ public class WndSadGhost extends Window {
 		add( btnWeapon );
 
 		if (!Dungeon.isChallenged( Challenges.NO_ARMOR )) {
-			RedButton btnArmor = new RedButton( Messages.get(this, "armor") ) {
+			RedButton btnArmor = new RedButton( Messages.get(this, "armor"), null) {
 				@Override
 				protected void onClick() {
 					selectReward(ghost, Ghost.Quest.armor);

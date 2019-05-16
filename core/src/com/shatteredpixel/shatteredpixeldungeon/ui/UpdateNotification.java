@@ -226,10 +226,10 @@ public class UpdateNotification extends Component {
 
 		@Override
 		protected void onSelect(int index) {
-			if (index == 0) {
-				Gdx.net.openURI("http://" + updateURL);
-				Game.instance.finish();
-			}
+//			if (index == 0) {
+//				Gdx.net.openURI("http://" + updateURL);
+//				Game.instance.finish();
+//			}
 		}
 	}
 }

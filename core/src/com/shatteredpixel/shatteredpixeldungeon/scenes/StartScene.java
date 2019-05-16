@@ -27,6 +27,7 @@ import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Archs;
@@ -35,6 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndGameInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndStartGame;
+import com.watabou.input.NoosaInputProcessor;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Image;
@@ -86,7 +88,7 @@ public class StartScene extends PixelScene {
 		if (SPDSettings.landscape()) yPos += 8;
 		
 		for (GamesInProgress.Info game : games) {
-			SaveSlotButton existingGame = new SaveSlotButton();
+			SaveSlotButton existingGame = new SaveSlotButton(GameAction.SLOT);
 			existingGame.set(game.slot);
 			existingGame.setRect((w - SLOT_WIDTH) / 2f, yPos, SLOT_WIDTH, SLOT_HEIGHT);
 			yPos += SLOT_HEIGHT + slotGap;
@@ -96,7 +98,7 @@ public class StartScene extends PixelScene {
 		}
 		
 		if (games.size() < GamesInProgress.MAX_SLOTS){
-			SaveSlotButton newGame = new SaveSlotButton();
+			SaveSlotButton newGame = new SaveSlotButton(GameAction.SLOT);
 			newGame.set(GamesInProgress.firstEmpty());
 			newGame.setRect((w - SLOT_WIDTH) / 2f, yPos, SLOT_WIDTH, SLOT_HEIGHT);
 			yPos += SLOT_HEIGHT + slotGap;
@@ -129,7 +131,12 @@ public class StartScene extends PixelScene {
 		
 		private int slot;
 		private boolean newGame;
-		
+
+		public SaveSlotButton(GameAction action) {
+			super();
+			this.hotKey = action;
+		}
+
 		@Override
 		protected void createChildren() {
 			super.createChildren();
@@ -204,7 +211,7 @@ public class StartScene extends PixelScene {
 				}
 				
 			}
-			
+			name.text("S" + slot + ": " + name.text());
 			layout();
 		}
 		
@@ -248,6 +255,16 @@ public class StartScene extends PixelScene {
 			
 		}
 		
+		@Override
+		protected boolean onKeyUp(NoosaInputProcessor.Key key) {
+			if (active && key.action.equals(hotKey) && slot == (key.code >> 8)) {
+				onClick();
+				return true;
+			} else {
+				return false;
+			}
+		}
+
 		@Override
 		protected void onClick() {
 			if (newGame) {

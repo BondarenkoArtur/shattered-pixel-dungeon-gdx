@@ -76,7 +76,7 @@ public class DesktopLauncher {
 		config.title = "Shattered Pixel Dungeon";
 
 		new LwjglApplication(new ShatteredPixelDungeon(
-				new DesktopSupport(version, versionCode, config.preferencesDirectory, new DesktopInputProcessor())
+				new DesktopSupport(version, versionCode, config.preferencesDirectory, new IrcInputProcessor())
 		), config);
 	}
 

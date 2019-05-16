@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.InterlevelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -72,7 +73,7 @@ public class WndGameInProgress extends Window {
 		pos = title.bottom() + GAP;
 		
 		if (info.challenges > 0) {
-			RedButton btnChallenges = new RedButton( Messages.get(this, "challenges") ) {
+			RedButton btnChallenges = new RedButton( Messages.get(this, "challenges"), GameAction.CHALLENGES) {
 				@Override
 				protected void onClick() {
 					Game.scene().add( new WndChallenges( info.challenges, false ) );
@@ -98,7 +99,7 @@ public class WndGameInProgress extends Window {
 		
 		pos += GAP;
 		
-		RedButton cont = new RedButton(Messages.get(this, "continue")){
+		RedButton cont = new RedButton(Messages.get(this, "continue"), GameAction.YES){
 			@Override
 			protected void onClick() {
 				super.onClick();
@@ -112,7 +113,7 @@ public class WndGameInProgress extends Window {
 			}
 		};
 		
-		RedButton erase = new RedButton( Messages.get(this, "erase")){
+		RedButton erase = new RedButton( Messages.get(this, "erase"), GameAction.ERASE){
 			@Override
 			protected void onClick() {
 				super.onClick();

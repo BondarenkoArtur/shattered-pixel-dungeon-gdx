@@ -134,8 +134,9 @@ public class StoneOfIntuition extends InventoryStone {
 			text.setPos(0, titlebar.bottom());
 			text.maxWidth( WIDTH );
 			add(text);
-			
-			final RedButton guess = new RedButton(""){
+
+			//todo check this
+			final RedButton guess = new RedButton("", null){
 				@Override
 				protected void onClick() {
 					super.onClick();

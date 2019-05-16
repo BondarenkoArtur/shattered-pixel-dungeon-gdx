@@ -24,6 +24,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Shopkeeper;
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
@@ -55,7 +56,7 @@ public class WndTradeItem extends Window {
 		
 		if (item.quantity() == 1) {
 			
-			RedButton btnSell = new RedButton( Messages.get(this, "sell", item.price()) ) {
+			RedButton btnSell = new RedButton( Messages.get(this, "sell", item.price()), GameAction.SELL ) {
 				@Override
 				protected void onClick() {
 					sell( item );
@@ -70,7 +71,7 @@ public class WndTradeItem extends Window {
 		} else {
 			
 			int priceAll= item.price();
-			RedButton btnSell1 = new RedButton( Messages.get(this, "sell_1", priceAll / item.quantity()) ) {
+			RedButton btnSell1 = new RedButton( Messages.get(this, "sell_1", priceAll / item.quantity()) , GameAction.SELL_1) {
 				@Override
 				protected void onClick() {
 					sellOne( item );
@@ -79,7 +80,7 @@ public class WndTradeItem extends Window {
 			};
 			btnSell1.setRect( 0, pos + GAP, WIDTH, BTN_HEIGHT );
 			add( btnSell1 );
-			RedButton btnSellAll = new RedButton( Messages.get(this, "sell_all", priceAll ) ) {
+			RedButton btnSellAll = new RedButton( Messages.get(this, "sell_all", priceAll ) , GameAction.SELL_ALL) {
 				@Override
 				protected void onClick() {
 					sell( item );
@@ -93,7 +94,7 @@ public class WndTradeItem extends Window {
 			
 		}
 		
-		RedButton btnCancel = new RedButton( Messages.get(this, "cancel") ) {
+		RedButton btnCancel = new RedButton( Messages.get(this, "cancel") , GameAction.NO) {
 			@Override
 			protected void onClick() {
 				hide();
@@ -117,7 +118,7 @@ public class WndTradeItem extends Window {
 		
 		if (canBuy) {
 			
-			RedButton btnBuy = new RedButton( Messages.get(this, "buy", price) ) {
+			RedButton btnBuy = new RedButton( Messages.get(this, "buy", price), GameAction.BUY) {
 				@Override
 				protected void onClick() {
 					hide();
@@ -128,7 +129,7 @@ public class WndTradeItem extends Window {
 			btnBuy.enable( price <= Dungeon.gold );
 			add( btnBuy );
 
-			RedButton btnCancel = new RedButton( Messages.get(this, "cancel") ) {
+			RedButton btnCancel = new RedButton( Messages.get(this, "cancel"), GameAction.NO) {
 				@Override
 				protected void onClick() {
 					hide();
@@ -138,7 +139,7 @@ public class WndTradeItem extends Window {
 			final MasterThievesArmband.Thievery thievery = Dungeon.hero.buff(MasterThievesArmband.Thievery.class);
 			if (thievery != null && !thievery.isCursed()) {
 				final float chance = thievery.stealChance(price);
-				RedButton btnSteal = new RedButton( Messages.get(this, "steal", Math.min(100, (int)(chance*100)))) {
+				RedButton btnSteal = new RedButton( Messages.get(this, "steal", Math.min(100, (int)(chance*100))), GameAction.STEAL) {
 					@Override
 					protected void onClick() {
 						if(thievery.steal(price)){

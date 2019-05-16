@@ -166,7 +166,8 @@ public class SurfaceScene extends PixelScene {
 			frame.hardlight( 0xDDEEFF );
 		}
 
-		RedButton gameOver = new RedButton( Messages.get(this, "exit") ) {
+		// todo fix this
+		RedButton gameOver = new RedButton( Messages.get(this, "exit") , null) {
 			protected void onClick() {
 				Game.switchScene( RankingsScene.class );
 			}

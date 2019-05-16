@@ -27,7 +27,8 @@ public class CheckBox extends RedButton {
 	private boolean checked = false;
 	
 	public CheckBox( String label ) {
-		super( label );
+		// todo check is this needed to be changed
+		super( label, null );
 		
 		icon( Icons.get( Icons.UNCHECKED ) );
 	}

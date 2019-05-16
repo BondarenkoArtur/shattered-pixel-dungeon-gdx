@@ -21,6 +21,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.windows;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.items.TomeOfMastery;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
@@ -49,8 +50,8 @@ public class WndChooseWay extends Window {
 		hl.text( way1.desc() + "\n\n" + way2.desc() + "\n\n" + Messages.get(this, "message"), WIDTH );
 		hl.setPos( titlebar.left(), titlebar.bottom() + GAP );
 		add( hl );
-		
-		RedButton btnWay1 = new RedButton( way1.title().toUpperCase() ) {
+		// todo fix ways
+		RedButton btnWay1 = new RedButton( way1.title().toUpperCase(),null) {
 			@Override
 			protected void onClick() {
 				hide();
@@ -60,7 +61,7 @@ public class WndChooseWay extends Window {
 		btnWay1.setRect( 0, hl.bottom() + GAP, (WIDTH - GAP) / 2, BTN_HEIGHT );
 		add( btnWay1 );
 		
-		RedButton btnWay2 = new RedButton( way2.title().toUpperCase() ) {
+		RedButton btnWay2 = new RedButton( way2.title().toUpperCase(),null) {
 			@Override
 			protected void onClick() {
 				hide();
@@ -70,7 +71,7 @@ public class WndChooseWay extends Window {
 		btnWay2.setRect( btnWay1.right() + GAP, btnWay1.top(), btnWay1.width(), BTN_HEIGHT );
 		add( btnWay2 );
 		
-		RedButton btnCancel = new RedButton( Messages.get(this, "cancel") ) {
+		RedButton btnCancel = new RedButton( Messages.get(this, "cancel"), GameAction.NO) {
 			@Override
 			protected void onClick() {
 				hide();

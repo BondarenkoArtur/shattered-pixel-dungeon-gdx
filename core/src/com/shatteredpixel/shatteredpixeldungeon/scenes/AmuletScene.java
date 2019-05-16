@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.input.GameAction;
 import com.shatteredpixel.shatteredpixeldungeon.items.Amulet;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
@@ -59,7 +60,8 @@ public class AmuletScene extends PixelScene {
 		amulet = new Image( Assets.AMULET );
 		add( amulet );
 
-		RedButton btnExit = new RedButton( Messages.get(this, "exit") ) {
+		// todo maybe check this
+		RedButton btnExit = new RedButton( Messages.get(this, "exit"), null) {
 			@Override
 			protected void onClick() {
 				Dungeon.win( Amulet.class );
@@ -70,7 +72,7 @@ public class AmuletScene extends PixelScene {
 		btnExit.setSize( WIDTH, BTN_HEIGHT );
 		add( btnExit );
 
-		RedButton btnStay = new RedButton( Messages.get(this, "stay") ) {
+		RedButton btnStay = new RedButton( Messages.get(this, "stay") , GameAction.NO) {
 			@Override
 			protected void onClick() {
 				onBackPressed();
